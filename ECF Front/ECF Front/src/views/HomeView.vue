@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Header from '../components/Header.vue'
 import { RouterLink } from 'vue-router';
 
+
 const toggleForm = ref(true)
 
 
@@ -20,7 +21,7 @@ const observation = ref("");
     <form v-if="toggleForm" action="">
 
         <div class="container-label">
-            <label class="labelName" for="clientType">Nom de l'entreprise </label>
+            <label class="labelName" for="clientType">Nom Entreprise / Client </label>
 
 
 
