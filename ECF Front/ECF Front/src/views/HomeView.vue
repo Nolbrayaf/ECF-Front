@@ -3,6 +3,15 @@ import { ref } from 'vue';
 import Header from '../components/Header.vue'
 import { RouterLink } from 'vue-router';
 
+const toggleForm = ref(true)
+
+
+
+const clientType = ref("")
+const clientName = ref("");
+const interventionDate = ref("");
+const observation = ref("");
+
 
 </script>
 
@@ -10,7 +19,7 @@ import { RouterLink } from 'vue-router';
     
 
 
-    <form action="" method="POST" :action="Review.vue">
+    <form v-if="toggleForm" action="">
 
         <div class="container-label">
             <label class="labelName" for="clientType">Nom de l'entreprise </label>
@@ -24,11 +33,11 @@ import { RouterLink } from 'vue-router';
             <input v-model="clientType" type="radio" name="clientType" value="particulier"><label for="clientType">Particulier</label>
 
 
-            <input v-model="clientName" type="text" name="clientName" placeholder="Nom Client" required><label for="clientName"></label>
+            <input v-model="clientName" type="text" placeholder="Nom Client" required>
         </div>
 
         <div class="container-label dateLabel">
-            <label class="labelName" for="interventionDate">Notre techinicien est intervenu pour l'entretien de la vitrerie le
+            <label class="labelName" for="interventionDate">Notre technicien est intervenu pour l'entretien de la vitrerie le
                 <input v-model="interventionDate" type="date" required >
             </label>
         </div>
@@ -47,10 +56,41 @@ import { RouterLink } from 'vue-router';
             <p>Signature du client / Cachet d'entreprise</p>
         </div>
 
-        <RouterLink to="/review">
-        <input type="button" value="Valider">
-        </RouterLink>
+        <input type="button" @click="toggleForm = !toggleForm, console.log(clientName)" value="Valider">
+
     </form>
+
+
+
+
+<div v-else class="review">
+
+    <div v-if="clientType == 'particulier'">
+        <p>Mr/Mme <span>{{ clientName }}</span>,</p>
+
+        <p>Notre technicien est intervenu pour l'entretien de la vitrerie le <span>{{ interventionDate }}</span></p>
+
+    </div>
+
+    <div v-else>
+        <p>Madame Monsieur,</p>
+
+        <p>Notre technicien est intervenu pour l'entretien de la vitrerie de l'entreprise <span>{{ clientName }}</span>
+            le <span>{{ interventionDate }}</span></p>
+
+    </div>
+    <p v-if="observation != ''">Observations technicien : </p>
+<p><span>{{ observation }}</span></p>
+<button @click="toggleForm = !toggleForm" >
+<img src="../assets/Images/icon-park-outline_back.png" alt="">
+</button>
+
+
+</div>
+
+
+
+
 </template>
 
 
@@ -60,7 +100,6 @@ import { RouterLink } from 'vue-router';
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding:0;
     margin: 0;
-    color: #f1f1f1;
 }
 
 
@@ -71,12 +110,16 @@ form {
     padding: 50px 40px;
     background-color: #55AB41;
     opacity: 0.8;
+    color: #f1f1f1;
 }
 
 .container-label {
     padding-bottom: 1.5rem;
 }
 
+input, textarea{
+    color: #333;
+}
 
 input[type=radio]{
 margin: 15px 10px;
@@ -100,6 +143,22 @@ input[type=button]{
     display: flex;
     justify-content: space-between;
 }
+
+
+.review{
+    width: 100%;
+    padding : 50px 0 ;
+    border: solid black 1px;
+}
+
+.review span{
+    font-weight: 600;
+}
+
+.review p{
+    margin: 10px 0;
+}
+
 
 @media (width < 680px) {
 
@@ -133,4 +192,7 @@ input[type=button]{
         margin-bottom: 50px;
     }
 }
+
+
+
 </style>
